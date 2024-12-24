@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Setup</string>
     <string name="initial_setup">Initial setup</string>
+    <string name="password">Password</string>
+    <string name="power">Power</string>
+    <string name="encryption">Encryption</string>
 </resources>
