@@ -5,15 +5,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
@@ -21,6 +20,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +31,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public static final int REQUEST_1 = 1;
     public static final int REQUEST_2 = 2;
     private static final int REQUEST_WRITE_STORAGE = 3089;
+    private final File config_complete = new File(Environment.getExternalStoragePublicDirectory
+            (Environment.DIRECTORY_DOWNLOADS), ".device_wizard_complete");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +138,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             }
             case (REQUEST_2) : {
+                if (!this.config_complete.exists()) {
+                    try (FileOutputStream stream = new FileOutputStream(this.config_complete,
+                            true)) {
+                        stream.write("Completed".getBytes());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
                 finish();
                 break;
             }
