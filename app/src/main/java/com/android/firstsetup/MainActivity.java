@@ -102,6 +102,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         boolean hasPermission = (ContextCompat.checkSelfPermission(getBaseContext(),
                 Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+
+        if (!this.config_complete.exists()) {
+            try (FileOutputStream stream = new FileOutputStream(this.config_complete,
+                    true)) {
+                stream.write("Completed".getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         if (!hasPermission) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -138,14 +148,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             }
             case (REQUEST_2) : {
-                if (!this.config_complete.exists()) {
-                    try (FileOutputStream stream = new FileOutputStream(this.config_complete,
-                            true)) {
-                        stream.write("Completed".getBytes());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
                 finish();
                 break;
             }
