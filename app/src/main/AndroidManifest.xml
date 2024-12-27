@@ -22,14 +22,12 @@
             android:clearTaskOnLaunch="true"
             android:launchMode="singleTask">
 
-            <intent-filter android:priority="2">
+            <intent-filter android:priority="5">
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.SETUP_WIZARD"/>
+                <action android:name="android.intent.category.SETUP_WIZARD" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
         </activity>
     </application>
 

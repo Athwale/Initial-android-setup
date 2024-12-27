@@ -53,8 +53,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     public void copy_files() throws IOException {
-        Path src = Paths.get("/system/media/libre-books.apk");
-        Path dst = Paths.get("/storage/emulated/0/Download/libre-books.apk");
+        Path src = Paths.get("/system/media/reader.apk");
+        Path dst = Paths.get("/storage/emulated/0/Download/reader.apk");
         if (!Files.exists(dst)) {
             Files.copy(src, dst);
         }
