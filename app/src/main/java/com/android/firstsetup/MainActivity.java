@@ -66,6 +66,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if (!Files.exists(dst)) {
             Files.copy(src, dst);
         }
+
+        if (!this.config_complete.exists()) {
+            try (FileOutputStream stream = new FileOutputStream(this.config_complete,
+                    true)) {
+                stream.write("Completed".getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         Toast.makeText(this, "Apks copied to Download", Toast.LENGTH_LONG).show();
     }
 
@@ -102,15 +111,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         boolean hasPermission = (ContextCompat.checkSelfPermission(getBaseContext(),
                 Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
-
-        if (!this.config_complete.exists()) {
-            try (FileOutputStream stream = new FileOutputStream(this.config_complete,
-                    true)) {
-                stream.write("Completed".getBytes());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
 
         if (!hasPermission) {
             ActivityCompat.requestPermissions(this,
